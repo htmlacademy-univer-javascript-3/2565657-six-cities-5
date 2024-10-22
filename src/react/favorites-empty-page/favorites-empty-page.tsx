@@ -1,4 +1,4 @@
-function FavoriteEmptyPage() {
+function FavoritesEmptyPage() {
   return (
     <body>
       <div className="page page--favorites-empty">
@@ -51,4 +51,4 @@ function FavoriteEmptyPage() {
     </body>
   );
 }
-export default FavoriteEmptyPage;
+export default FavoritesEmptyPage;

@@ -1,4 +1,4 @@
-function FavoritePage() {
+function FavoritesPage() {
   return (
     <body>
       <div className="page">
@@ -170,4 +170,4 @@ function FavoritePage() {
   );
 }
 
-export default FavoritePage;
+export default FavoritesPage;
