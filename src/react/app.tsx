@@ -2,9 +2,9 @@ import MainPage from './main-page/main-page.tsx';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import LoginPage from './login-page/login-page.tsx';
 import FavoritesPage from './favorites-page/favorites-page.tsx';
-import NotFoundPage from './not-found-page/NotFoundPage.tsx';
+import NotFoundPage from './not-found-page/not-found-page.tsx';
 import OfferPage from './offer-page/offer-page.tsx';
-import PrivateRoute from './favorites-page/PrivateRoute.tsx';
+import PrivateRoute from './favorites-page/private-route.tsx';
 
 function App(props: { offerCount: number }) {
   return (
