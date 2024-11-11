@@ -4,7 +4,7 @@ import App from './react/app.tsx';
 import {offers} from './mocks/offers.ts';
 import {detailedOffers} from './mocks/detailedOffers.ts';
 import {comments} from './mocks/comments.ts';
-import {cities} from "./mocks/cities.ts";
+import {cities} from './mocks/cities.ts';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
