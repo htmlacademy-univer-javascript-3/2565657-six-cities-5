@@ -1,25 +1,35 @@
-import MainPage from './main-page/main-page.tsx';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import LoginPage from './login-page/login-page.tsx';
-import FavoritesPage from './favorites-page/favorites-page.tsx';
-import NotFoundPage from './not-found-page/not-found-page.tsx';
-import OfferPage from './offer-page/offer-page.tsx';
-import PrivateRoute from './favorites-page/private-route.tsx';
+import {AppRouter} from './routing/app-router.ts';
+import LoginPage from './pages/login-page/login-page.tsx';
+import MainPage from './pages/main-page/main-page.tsx';
+import FavoritesPage from './pages/favorites-page/favorites-page.tsx';
+import OfferPage from './pages/offer-page/offer-page.tsx';
+import NotFoundPage from './pages/not-found-page/not-found-page.tsx';
+import {Offer} from '../interfaces/offer.ts';
+import {DetailedOffer} from '../interfaces/detailed-offer.ts';
+import {Comment} from '../interfaces/comment.ts';
+import PrivateRoute from './pages/favorites-page/private-route.tsx';
 
-function App(props: { offerCount: number }) {
+type AppProps = {
+  offers: Offer[];
+  detailedOffers: DetailedOffer[];
+  comments: Comment[];
+}
+
+function App({ offers, detailedOffers, comments } : AppProps) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={'/'} element={<MainPage offerCount={ props.offerCount } />} />
-        <Route path={'/login'} element={<LoginPage />} />
-        <Route path={'/favorites'} element={
+        <Route path={AppRouter.Main} element={<MainPage detailedOffers={detailedOffers} />} />
+        <Route path={AppRouter.Login} element={<LoginPage />} />
+        <Route path={AppRouter.Favorites} element={
           <PrivateRoute>
-            <FavoritesPage />
+            <FavoritesPage favoriteOffers={offers.filter((offer) => offer.isFavorite)} />
           </PrivateRoute>
         }
         />
-        <Route path={'/offer/:id'} element={<OfferPage />} />
-        <Route path={'*'} element={<NotFoundPage />} />
+        <Route path={AppRouter.Offer} element={<OfferPage detailedOffers={detailedOffers} comments={comments}/>}/>
+        <Route path={AppRouter.NotFoundPage} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
