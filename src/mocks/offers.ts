@@ -5,7 +5,6 @@ import {Image} from './enums/image.ts';
 import {cities} from './cities.ts';
 import {locations} from './locations.ts';
 
-
 export const offers: Offer[] = [
   {
     id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
@@ -17,7 +16,8 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: true,
     rating: Rating.FourStars,
-    previewImage: Image.Room
+    previewImage: Image.Room,
+    point: cities[0].points[0]
   },
   {
     id: '6af6f711-c28d-4121-82cd-e0b462a27f01',
@@ -29,7 +29,21 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: false,
     rating: Rating.FiveStars,
-    previewImage: Image.Apartment2
+    previewImage: Image.Apartment2,
+    point: cities[1].points[0]
+  },
+  {
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f03',
+    title: 'A cozy nest far from the center',
+    type: Type.Apartment,
+    price: 80,
+    city: cities[1],
+    location: locations[1],
+    isFavorite: true,
+    isPremium: false,
+    rating: Rating.OneStar,
+    previewImage: Image.Apartment3,
+    point: cities[1].points[1]
   },
   {
     id: '6af6f711-c28d-4121-82cd-e0b462a27f02',
@@ -41,18 +55,7 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: true,
     rating: Rating.FourStars,
-    previewImage: Image.Apartment1
-  },
-  {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f03',
-    title: 'A cozy nest far from the center',
-    type: Type.Apartment,
-    price: 80,
-    city: cities[3],
-    location: locations[3],
-    isFavorite: true,
-    isPremium: false,
-    rating: Rating.OneStar,
-    previewImage: Image.Apartment3
+    previewImage: Image.Apartment1,
+    point: cities[2].points[0]
   }
 ];
