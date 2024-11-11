@@ -1,5 +1,8 @@
-import OfferCard from './offer-card.tsx';
-function MainPage(props: { offerCount: number }) {
+import OffersList from './offers-list.tsx';
+import {DetailedOffer} from '../../../interfaces/detailed-offer.ts';
+
+
+function MainPage(props: { detailedOffers: DetailedOffer[] }) {
   return (
     <body>
       <div className="page page--gray page--main">
@@ -90,11 +93,7 @@ function MainPage(props: { offerCount: number }) {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {Array.from({ length: props.offerCount }, (_, index) => (
-                    <OfferCard key={index}/>
-                  ))}
-                </div>
+                <OffersList detailedOffers={ props.detailedOffers }/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>
