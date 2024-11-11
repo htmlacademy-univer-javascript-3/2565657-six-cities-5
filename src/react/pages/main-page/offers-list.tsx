@@ -1,28 +1,33 @@
 import {Offer} from '../../../interfaces/offer.ts';
 import OfferCard from './offer-card.tsx';
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {DetailedOffer} from '../../../interfaces/detailed-offer.ts';
+import {Point} from '../../../interfaces/point.ts';
 
-function OffersList(props: { detailedOffers: DetailedOffer[] }) {
-  const [, setIsActiveCardId] = useState<string | null>(null);
+type OffersListProps = {
+  offers: Offer[];
+  setSelectedPoint: React.Dispatch<React.SetStateAction<Point | null>>;
+}
 
-  const handleMouseOver = (value: string) => {
-    setIsActiveCardId(value);
+function OffersList({ offers, setSelectedPoint } : OffersListProps) {
+
+
+  const handleMouseOver = (id: string) => {
+    const point = offers.find((offer) => offer.id === id)!.point;
+    setSelectedPoint(point);
   };
 
   const handleMouseOut = () => {
-    setIsActiveCardId(null);
+    setSelectedPoint(null);
   };
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      { props.detailedOffers.map((review) => (
-        <Link key={review.id} to={ `/offer/${review.id}` }>
+      { offers.map((offer) => (
+        <Link key={offer.id} to={ `/offer/${offer.id}` }>
           <OfferCard
-            key={review.id}
-            offer={review as Offer}
-            handleMouseOver={handleMouseOver}
+            key={offer.id}
+            offer={offer}
+            handleMouseOver={() => handleMouseOver(offer.id)}
             handleMouseOut={handleMouseOut}
           />
         </Link>

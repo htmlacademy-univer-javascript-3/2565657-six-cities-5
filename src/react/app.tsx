@@ -9,18 +9,20 @@ import {Offer} from '../interfaces/offer.ts';
 import {DetailedOffer} from '../interfaces/detailed-offer.ts';
 import {Comment} from '../interfaces/comment.ts';
 import PrivateRoute from './pages/favorites-page/private-route.tsx';
+import {City} from '../interfaces/city.ts';
 
 type AppProps = {
   offers: Offer[];
   detailedOffers: DetailedOffer[];
   comments: Comment[];
+  cities: City[];
 }
 
-function App({ offers, detailedOffers, comments } : AppProps) {
+function App({ offers, detailedOffers, comments, cities } : AppProps) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRouter.Main} element={<MainPage detailedOffers={detailedOffers} />} />
+        <Route path={AppRouter.Main} element={<MainPage offers={offers} cities={cities} />} />
         <Route path={AppRouter.Login} element={<LoginPage />} />
         <Route path={AppRouter.Favorites} element={
           <PrivateRoute>

@@ -1,8 +1,25 @@
 import OffersList from './offers-list.tsx';
-import {DetailedOffer} from '../../../interfaces/detailed-offer.ts';
+import {useState} from 'react';
+import {City} from '../../../interfaces/city.ts';
+import Map from './map.tsx';
+import {Point} from '../../../interfaces/point.ts';
+import {Offer} from '../../../interfaces/offer.ts';
+import {AppRouter} from '../../routing/app-router.ts';
+import {Link} from 'react-router-dom';
 
+type MainPageProps = {
+  offers: Offer[];
+  cities: City[];
+}
 
-function MainPage(props: { detailedOffers: DetailedOffer[] }) {
+function MainPage({ offers, cities } : MainPageProps) {
+  const [selectedCity, setSelectedCity] = useState<City>(cities[0]);
+  const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
+
+  const handleSelectCity = (city: City) => {
+    setSelectedCity(city);
+  };
+
   return (
     <body>
       <div className="page page--gray page--main">
@@ -10,9 +27,9 @@ function MainPage(props: { detailedOffers: DetailedOffer[] }) {
           <div className="container">
             <div className="header__wrapper">
               <div className="header__left">
-                <a className="header__logo-link header__logo-link--active">
+                <Link className="header__logo-link" to={AppRouter.Main}>
                   <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"></img>
-                </a>
+                </Link>
               </div>
               <nav className="header__nav">
                 <ul className="header__nav-list">
@@ -40,36 +57,34 @@ function MainPage(props: { detailedOffers: DetailedOffer[] }) {
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
+                {cities.map((city) => {
+                  if (city === selectedCity) {
+                    return (
+                      <li key={city.name} className="locations__item">
+                        <button
+                          type="button"
+                          style={{ border: 'none' }}
+                          className="locations__item-link tabs__item tabs__item--active"
+                        >
+                          <span>{city.name}</span>
+                        </button>
+                      </li>
+                    );
+                  } else {
+                    return (
+                      <li key={city.name} className="locations__item">
+                        <button
+                          style={{ border: 'none', cursor: 'pointer', background: 'none' }}
+                          type="button"
+                          className="locations__item-link tabs__item"
+                          onClick={() => handleSelectCity(city)}
+                        >
+                          <span>{city.name}</span>
+                        </button>
+                      </li>
+                    );
+                  }
+                })}
               </ul>
             </section>
           </div>
@@ -77,7 +92,7 @@ function MainPage(props: { detailedOffers: DetailedOffer[] }) {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">312 places to stay in Amsterdam</b>
+                <b className="places__found">{selectedCity.points.length} places to stay in {selectedCity.name}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -93,10 +108,13 @@ function MainPage(props: { detailedOffers: DetailedOffer[] }) {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <OffersList detailedOffers={ props.detailedOffers }/>
+                <OffersList
+                  offers={offers.filter((offer) => offer.city.name === selectedCity.name)}
+                  setSelectedPoint={setSelectedPoint}
+                />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <Map city={selectedCity} selectedPoint={selectedPoint} />
               </div>
             </div>
           </div>

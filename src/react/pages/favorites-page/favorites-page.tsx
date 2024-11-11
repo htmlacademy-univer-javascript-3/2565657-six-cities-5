@@ -1,7 +1,7 @@
 import FavoriteCard from './favorite-card.tsx';
 import {Offer} from '../../../interfaces/offer.ts';
 import {Link} from 'react-router-dom';
-import {AppRouter} from "../../routing/app-router.ts";
+import {AppRouter} from '../../routing/app-router.ts';
 
 type FavoritesPageProps = {
   favoriteOffers: Offer[];
