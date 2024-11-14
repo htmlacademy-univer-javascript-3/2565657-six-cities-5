@@ -1,25 +1,31 @@
 import {Link, Navigate, useParams} from 'react-router-dom';
 import {DetailedOffer} from '../../../interfaces/detailed-offer.ts';
 import {AppRouter} from '../../routing/app-router.ts';
-import OtherOffer from './other-offer.tsx';
-import {Offer} from '../../../interfaces/offer.ts';
 import CommentForm from './comment-form.tsx';
-import {Comment} from '../../../interfaces/comment.ts';
+import {Review} from '../../../interfaces/review.ts';
+import ReviewsList from './reviews-list/reviews-list.tsx';
+import Map from '../../general-components/map.tsx';
+import {useState} from 'react';
+import {Point} from '../../../interfaces/point.ts';
+import OffersList from '../../general-components/offers-list.tsx';
 
 type OfferPageProps = {
   detailedOffers: DetailedOffer[];
-  comments: Comment[];
+  reviews: Review[];
 }
 
-function OfferPage({ detailedOffers, comments } : OfferPageProps) {
+function OfferPage({ detailedOffers, reviews } : OfferPageProps) {
   const { id } = useParams();
   const selectedDetailedOffer = detailedOffers.find((detailedOffer) => detailedOffer.id === id);
-  const [year, month, day] = comments[1].date.split('-');
-  const formattedDate = `${day}.${month}.${year}`;
+  const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
 
   if (!selectedDetailedOffer) {
     return (<Navigate to={AppRouter.NotFoundPage} />);
   }
+
+  const nearbyDetailedOffers = detailedOffers.filter((offer) =>
+    offer.id !== selectedDetailedOffer.id &&
+    offer.city.name === selectedDetailedOffer.city.name);
 
   return (
     <body>
@@ -143,53 +149,29 @@ function OfferPage({ detailedOffers, comments } : OfferPageProps) {
                     </p>
                   </div>
                 </div>
-                <section className="offer__reviews detailedOffers">
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{1}</span></h2>
-                  <ul className="reviews__list">
-                    <li className="reviews__item">
-                      <div className="reviews__user user">
-                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img className="reviews__avatar user__avatar" src={comments[1].user.avatarUrl} width="54" height="54"
-                            alt="Reviews avatar"
-                          >
-                          </img>
-                        </div>
-                        <span className="reviews__user-name">
-                          {comments[1].user.name}
-                        </span>
-                      </div>
-                      <div className="reviews__info">
-                        <div className="reviews__rating rating">
-                          <div className="reviews__stars rating__stars">
-                            <span style={{width: `${20 * comments[1].rating}%` }}></span>
-                            <span className="visually-hidden">Rating</span>
-                          </div>
-                        </div>
-                        <p className="reviews__text">
-                          {comments[1].comment}
-                        </p>
-                        <time className="reviews__time" dateTime={comments[1].date}>{formattedDate}</time>
-                      </div>
-                    </li>
-                  </ul>
+                <section className="offer__reviews detailedOffers"> {/*ПОСМОТРЕТЬ*/}
+                  <h2 className="reviews__title">Reviews &middot;
+                    <span className="reviews__amount">
+                      {reviews.length}
+                    </span>
+                  </h2>
+                  <ReviewsList reviews={reviews} />
                   <CommentForm />
                 </section>
               </div>
             </div>
-            <section className="offer__map map"></section>
-          </section>
-          <div className="container">
-            <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <div className="near-places__list places__list">
-                {detailedOffers.filter((detailedOffer) => detailedOffer.id !== id).map((detailedOffer) => (
-                  <Link key={detailedOffer.id} to={ `/offer/${detailedOffer.id}` }>
-                    <OtherOffer key={detailedOffer.id} offer={detailedOffer as Offer} />
-                  </Link>
-                ))}
-              </div>
+            <section className="offer__map map">
+              <Map city={selectedDetailedOffer.city}
+                points={selectedDetailedOffer.city.points.filter((point) =>
+                  point.offerId !== selectedDetailedOffer.id)} selectedPoint={selectedPoint}
+              />
             </section>
-          </div>
+          </section>
+          <OffersList
+            isNearbyOffersList
+            offers={nearbyDetailedOffers}
+            setSelectedPoint={setSelectedPoint}
+          />
         </main>
       </div>
     </body>

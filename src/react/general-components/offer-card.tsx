@@ -1,24 +1,25 @@
-import {Offer} from '../../../interfaces/offer.ts';
+import {Offer} from '../../interfaces/offer.ts';
 
 type OfferCardProps = {
+  isNearbyOfferCard: boolean;
   offer: Offer;
   handleMouseOver: (value: string) => void;
   handleMouseOut: () => void;
 }
 
-function OfferCard({ offer, handleMouseOver, handleMouseOut} : OfferCardProps) {
+function OfferCard({ isNearbyOfferCard, offer, handleMouseOver, handleMouseOut} : OfferCardProps) {
   return (
     <article
-      className="cities__card place-card"
-      onMouseOut={handleMouseOut}
+      className={isNearbyOfferCard ? 'near-places__card place-card' : 'cities__card place-card'}
       onMouseOver={() => handleMouseOver(offer.id)}
+      onMouseOut={handleMouseOut}
     >
-      {offer.isPremium && (
+      {!isNearbyOfferCard && offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${isNearbyOfferCard ? 'near-places__card place-card' : 'cities__image-wrapper'} place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"

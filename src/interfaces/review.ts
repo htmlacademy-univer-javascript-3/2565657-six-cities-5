@@ -1,6 +1,6 @@
 import {Host} from './host.ts';
 
-export interface Comment {
+export interface Review {
   id: string;
   date: string;
   user: Host;
