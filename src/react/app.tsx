@@ -7,14 +7,14 @@ import OfferPage from './pages/offer-page/offer-page.tsx';
 import NotFoundPage from './pages/not-found-page/not-found-page.tsx';
 import {Offer} from '../interfaces/offer.ts';
 import {DetailedOffer} from '../interfaces/detailed-offer.ts';
-import {Comment} from '../interfaces/comment.ts';
+import {Review} from '../interfaces/review.ts';
 import PrivateRoute from './pages/favorites-page/private-route.tsx';
 import {City} from '../interfaces/city.ts';
 
 type AppProps = {
   offers: Offer[];
   detailedOffers: DetailedOffer[];
-  comments: Comment[];
+  comments: Review[];
   cities: City[];
 }
 
@@ -30,7 +30,7 @@ function App({ offers, detailedOffers, comments, cities } : AppProps) {
           </PrivateRoute>
         }
         />
-        <Route path={AppRouter.Offer} element={<OfferPage detailedOffers={detailedOffers} comments={comments}/>}/>
+        <Route path={AppRouter.Offer} element={<OfferPage detailedOffers={detailedOffers} reviews={comments}/>}/>
         <Route path={AppRouter.NotFoundPage} element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

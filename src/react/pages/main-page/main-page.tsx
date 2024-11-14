@@ -1,7 +1,7 @@
-import OffersList from './offers-list.tsx';
+import OffersList from '../../general-components/offers-list.tsx';
 import {useState} from 'react';
 import {City} from '../../../interfaces/city.ts';
-import Map from './map.tsx';
+import Map from '../../general-components/map.tsx';
 import {Point} from '../../../interfaces/point.ts';
 import {Offer} from '../../../interfaces/offer.ts';
 import {AppRouter} from '../../routing/app-router.ts';
@@ -113,8 +113,10 @@ function MainPage({ offers, cities } : MainPageProps) {
                   setSelectedPoint={setSelectedPoint}
                 />
               </section>
-              <div className="cities__right-section">
-                <Map city={selectedCity} selectedPoint={selectedPoint} />
+              <div className="cities__right-section" style={{ textAlign: 'center' }}>
+                <section className="offer__map map" >
+                  <Map city={selectedCity} points={selectedCity.points} selectedPoint={selectedPoint}/>
+                </section>
               </div>
             </div>
           </div>

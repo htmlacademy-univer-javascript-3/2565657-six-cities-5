@@ -1,8 +1,6 @@
 import {hosts} from './hosts.ts';
-import {Comment} from '../interfaces/comment.ts';
-
-
-export const comments: Comment[] = [
+import {Review} from '../interfaces/review.ts';
+export const reviews: Review[] = [
   {
     id: '1',
     date: '2023-10-01',
