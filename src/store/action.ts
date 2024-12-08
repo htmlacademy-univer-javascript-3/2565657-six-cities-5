@@ -9,8 +9,16 @@ export const changeCity = createAction(
     payload: newCity
   }));
 
-export const fillOffersList = createAction(
-  ActionRouter.FillOffersListAction,
-  (filteredOffers: Offer[]) => ({
-    payload: filteredOffers
+export const fillCityOffersList = createAction(
+  ActionRouter.FillCityOffersListAction,
+  (selectedOffers: Offer[]) => ({
+    payload: selectedOffers
   }));
+
+export const fillSortedOffersList = createAction(
+  ActionRouter.FillSortedOffersListAction,
+  (sortedOffers: Offer[]) => ({
+    payload: sortedOffers
+  }));
+
+
