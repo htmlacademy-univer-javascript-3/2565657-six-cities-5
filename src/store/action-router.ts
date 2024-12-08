@@ -1,4 +1,5 @@
 export enum ActionRouter {
   ChangeCityAction = 'cities/changeCity',
-  FillOffersListAction = 'cities/fillOffersList'
+  FillCityOffersListAction = 'cities/fillCityOffersList',
+  FillSortedOffersListAction = 'cities/fillSortedOffersList'
 }

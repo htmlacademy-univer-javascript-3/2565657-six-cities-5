@@ -1,15 +1,13 @@
-import {changeCity, fillOffersList} from '../../../store/action.ts';
+import {changeCity} from '../../../store/action.ts';
 import {City} from '../../../interfaces/city.ts';
 import {useAppDispatch} from '../../../store';
-import {Offer} from '../../../interfaces/offer.ts';
 
 type CitiesListProps = {
-  offers: Offer[];
   cities: City[];
   selectedCity: City;
 }
 
-function CitiesList({ offers, cities, selectedCity } : CitiesListProps) {
+function CitiesList({ cities, selectedCity } : CitiesListProps) {
   const dispatch = useAppDispatch();
 
   return (
@@ -34,11 +32,7 @@ function CitiesList({ offers, cities, selectedCity } : CitiesListProps) {
                 style={{border: 'none', cursor: 'pointer', background: 'none'}}
                 type="button"
                 className="locations__item-link tabs__item"
-                onClick={() => {
-                  dispatch(changeCity(city));
-                  dispatch(fillOffersList(offers.filter(
-                    (offer) => offer.city.name === city.name)));
-                }}
+                onClick={() => dispatch(changeCity(city))}
               >
                 <span>{city.name}</span>
               </button>

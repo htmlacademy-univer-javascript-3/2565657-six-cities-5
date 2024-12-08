@@ -11,7 +11,6 @@ type OffersListProps = {
 
 function OffersList({ isNearbyOffersList, offers, setSelectedPoint } : OffersListProps) {
 
-
   const handleMouseOver = (id: string) => {
     const point = offers.find((offer) => offer.id === id)!.point;
     setSelectedPoint(point);
