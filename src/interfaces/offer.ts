@@ -1,6 +1,6 @@
 import {City} from './city.ts';
 import {Location} from './location.ts';
-import {Point} from "./point.ts";
+import {Point} from './point.ts';
 
 export interface Offer {
   id: string;

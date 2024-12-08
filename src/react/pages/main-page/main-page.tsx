@@ -6,6 +6,8 @@ import {Point} from '../../../interfaces/point.ts';
 import {Offer} from '../../../interfaces/offer.ts';
 import {AppRouter} from '../../routing/app-router.ts';
 import {Link} from 'react-router-dom';
+import {useAppSelector} from '../../../store';
+import CitiesList from './cities-list.tsx';
 
 type MainPageProps = {
   offers: Offer[];
@@ -13,12 +15,10 @@ type MainPageProps = {
 }
 
 function MainPage({ offers, cities } : MainPageProps) {
-  const [selectedCity, setSelectedCity] = useState<City>(cities[0]);
   const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
 
-  const handleSelectCity = (city: City) => {
-    setSelectedCity(city);
-  };
+  const selectedCity = useAppSelector((state) => state.city);
+  const filteredOffers = useAppSelector((state) => state.offers);
 
   return (
     <body>
@@ -56,36 +56,7 @@ function MainPage({ offers, cities } : MainPageProps) {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <ul className="locations__list tabs__list">
-                {cities.map((city) => {
-                  if (city === selectedCity) {
-                    return (
-                      <li key={city.name} className="locations__item">
-                        <button
-                          type="button"
-                          style={{ border: 'none' }}
-                          className="locations__item-link tabs__item tabs__item--active"
-                        >
-                          <span>{city.name}</span>
-                        </button>
-                      </li>
-                    );
-                  } else {
-                    return (
-                      <li key={city.name} className="locations__item">
-                        <button
-                          style={{ border: 'none', cursor: 'pointer', background: 'none' }}
-                          type="button"
-                          className="locations__item-link tabs__item"
-                          onClick={() => handleSelectCity(city)}
-                        >
-                          <span>{city.name}</span>
-                        </button>
-                      </li>
-                    );
-                  }
-                })}
-              </ul>
+              <CitiesList offers={offers} cities={cities} selectedCity={selectedCity}/>
             </section>
           </div>
           <div className="cities">
@@ -109,7 +80,8 @@ function MainPage({ offers, cities } : MainPageProps) {
                   </ul>
                 </form>
                 <OffersList
-                  offers={offers.filter((offer) => offer.city.name === selectedCity.name)}
+                  isNearbyOffersList={false}
+                  offers={filteredOffers}
                   setSelectedPoint={setSelectedPoint}
                 />
               </section>

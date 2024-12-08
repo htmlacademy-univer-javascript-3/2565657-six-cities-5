@@ -7,7 +7,7 @@ import {locations} from './locations.ts';
 
 export const offers: Offer[] = [
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
+    id: '1',
     title: 'An excellent place with a view of the embankment',
     type: Type.Room,
     price: 150,
@@ -20,7 +20,33 @@ export const offers: Offer[] = [
     point: cities[0].points[0]
   },
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f01',
+    id: '2',
+    title: 'Cozy apartment near the park',
+    type: Type.Apartment,
+    price: 120,
+    city: cities[0],
+    location: locations[0],
+    isFavorite: false,
+    isPremium: false,
+    rating: Rating.ThreeStars,
+    previewImage: Image.Apartment1,
+    point: cities[0].points[1]
+  },
+  {
+    id: '3',
+    title: 'Modern studio in the city center',
+    type: Type.Apartment,
+    price: 180,
+    city: cities[0],
+    location: locations[0],
+    isFavorite: true,
+    isPremium: true,
+    rating: Rating.FiveStars,
+    previewImage: Image.Apartment2,
+    point: cities[0].points[2]
+  },
+  {
+    id: '4',
     title: 'There are amazing sunsets here',
     type: Type.Apartment,
     price: 200,
@@ -33,7 +59,7 @@ export const offers: Offer[] = [
     point: cities[1].points[0]
   },
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f03',
+    id: '5',
     title: 'A cozy nest far from the center',
     type: Type.Apartment,
     price: 80,
@@ -46,7 +72,20 @@ export const offers: Offer[] = [
     point: cities[1].points[1]
   },
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f02',
+    id: '6',
+    title: 'Charming apartment in the heart of the city',
+    type: Type.Apartment,
+    price: 150,
+    city: cities[1],
+    location: locations[1],
+    isFavorite: false,
+    isPremium: true,
+    rating: Rating.FourStars,
+    previewImage: Image.Apartment1,
+    point: cities[1].points[2]
+  },
+  {
+    id: '7',
     title: 'Enjoy the hustle and bustle of the city',
     type: Type.Apartment,
     price: 160,
@@ -57,5 +96,148 @@ export const offers: Offer[] = [
     rating: Rating.FourStars,
     previewImage: Image.Apartment1,
     point: cities[2].points[0]
+  },
+  {
+    id: '8',
+    title: 'Quiet retreat with garden access',
+    type: Type.Room,
+    price: 90,
+    city: cities[2],
+    location: locations[2],
+    isFavorite: false,
+    isPremium: false,
+    rating: Rating.ThreeStars,
+    previewImage: Image.Room,
+    point: cities[2].points[1]
+  },
+  {
+    id: '9',
+    title: 'Luxurious penthouse with a city view',
+    type: Type.Apartment,
+    price: 300,
+    city: cities[2],
+    location: locations[2],
+    isFavorite: true,
+    isPremium: true,
+    rating: Rating.FiveStars,
+    previewImage: Image.Apartment2,
+    point: cities[2].points[2]
+  },
+  {
+    id: '10',
+    title: 'A lovely apartment in the city center with easy access to public transport.',
+    type: Type.Apartment,
+    price: 120,
+    city: cities[3],
+    location: locations[3],
+    isFavorite: false,
+    isPremium: false,
+    rating: Rating.ThreeStars,
+    previewImage: Image.Apartment1,
+    point: cities[3].points[0]
+  },
+  {
+    id: '11',
+    title: 'Modern studio with all amenities.',
+    type: Type.Room,
+    price: 90,
+    city: cities[3],
+    location: locations[3],
+    isFavorite: false,
+    isPremium: true,
+    rating: Rating.FourStars,
+    previewImage: Image.Room,
+    point: cities[3].points[1]
+  },
+  {
+    id : '12' ,
+    title : 'Spacious apartment with a balcony.',
+    type : Type.Apartment ,
+    price : 200 ,
+    city : cities [3] ,
+    location : locations [3] ,
+    isFavorite : true ,
+    isPremium:true ,
+    rating : Rating.FiveStars ,
+    previewImage : Image.Apartment3 ,
+    point : cities [3].points [2]
+  },
+  {
+    id : '13' ,
+    title : 'Cozy and affordable room for travelers.' ,
+    type : Type.Room ,
+    price : 70 ,
+    city : cities [4] ,
+    location : locations [4] ,
+    isFavorite : false ,
+    isPremium : false ,
+    rating : Rating.TwoStars ,
+    previewImage : Image.Room ,
+    point : cities [4].points [0]
+  },
+  {
+    id : '14' ,
+    title : 'Stylish apartment in a quiet neighborhood.' ,
+    type : Type.Apartment ,
+    price : 110 ,
+    city : cities [4] ,
+    location : locations [4] ,
+    isFavorite : true ,
+    isPremium : true ,
+    rating : Rating.FourStars ,
+    previewImage : Image.Apartment1 ,
+    point : cities [4].points [1]
+  },
+  {
+    id : '15' ,
+    title : 'Luxury suite with all the comforts.' ,
+    type : Type.Apartment ,
+    price : 250 ,
+    city : cities [4] ,
+    location : locations [4] ,
+    isFavorite : true ,
+    isPremium : true ,
+    rating : Rating.FiveStars ,
+    previewImage : Image.Apartment2 ,
+    point : cities [4].points [2]
+  },
+  {
+    id : '16' ,
+    title : 'Beautiful beachfront villa for a relaxing getaway.' ,
+    type : Type.Apartment ,
+    price : 300 ,
+    city : cities [5] ,
+    location : locations [5] ,
+    isFavorite : true ,
+    isPremium : true ,
+    rating : Rating.FiveStars ,
+    previewImage : Image.Apartment2 ,
+    point : cities [5].points [0]
+  },
+  {
+    id : '17' ,
+    title : 'Charming cottage with stunning sea views.' ,
+    type : Type.Room ,
+    price : 150 ,
+    city : cities [5] ,
+    location : locations [5] ,
+    isFavorite : false ,
+    isPremium : false ,
+    rating : Rating.ThreeStars ,
+    previewImage : Image.Room ,
+    point : cities [5].points [1]
+  },
+  {
+    id : '18' ,
+    title : 'Modern beach house perfect for families.' ,
+    type : Type.Apartment ,
+    price : 250 ,
+    city : cities [5] ,
+    location : locations [5] ,
+    isFavorite : true ,
+    isPremium:true ,
+    rating : Rating.FourStars ,
+    previewImage : Image.Apartment1 ,
+    point : cities [5].points [2]
   }
 ];
