@@ -1,13 +1,32 @@
 import FavoriteCard from './favorite-card.tsx';
 import {Offer} from '../../../interfaces/offer.ts';
 import {Link} from 'react-router-dom';
-import {AppRouter} from '../../routing/app-router.ts';
+import {AppRouter} from '../../app-router.ts';
+import {useAppDispatch} from '../../../store';
+import {useEffect, useState} from 'react';
+import {ApiRouter} from '../../../api/api-router.ts';
+import {setError} from '../../../store/actions.ts';
 
-type FavoritesPageProps = {
-  favoriteOffers: Offer[];
-}
+function FavoritesPage() {
+  const [favoriteOffers, setFavoritesOffers] = useState<Offer[]>([]);
+  const [isReceived, setIsReceived] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
-function FavoritesPage({ favoriteOffers } : FavoritesPageProps) {
+  useEffect(() => {
+    if (!isReceived) {
+      fetch(ApiRouter.Favorites, {
+        method: 'GET'
+      })
+        .then((response) => response.json())
+        .then((data: Offer[]) => setFavoritesOffers(data))
+        .catch((err: string) =>
+          dispatch(setError(err))
+        );
+
+      setIsReceived(true);
+    }
+  }, [isReceived]);
+
   const groupedByPlace = favoriteOffers.reduce<Record<string, Offer[]>>(
     (acc, favoriteOffer) => {
       if (!acc[favoriteOffer.city.name]) {

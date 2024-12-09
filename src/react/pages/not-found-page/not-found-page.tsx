@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {AppRouter} from '../../routing/app-router.ts';
+import {AppRouter} from '../../app-router.ts';
 
 function NotFoundPage() {
   return (

@@ -1,7 +1,7 @@
-import {Review} from '../../../../interfaces/review.ts';
+import {Comment} from '../../../../interfaces/comment.ts';
 
 type ReviewCardProps = {
-  review: Review;
+  review: Comment;
 }
 
 function ReviewCard({ review } : ReviewCardProps) {
