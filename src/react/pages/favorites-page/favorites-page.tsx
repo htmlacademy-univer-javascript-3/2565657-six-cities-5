@@ -7,7 +7,7 @@ import {useEffect, useState} from 'react';
 import {ApiRouter} from '../../../api/api-router.ts';
 import {setError} from '../../../store/actions.ts';
 import {getToken} from '../../../api/token.ts';
-import {logoutAction} from "../../../store/api-actions.ts";
+import {logoutAction} from '../../../store/api-actions.ts';
 
 function FavoritesPage() {
   const [favoriteOffers, setFavoritesOffers] = useState<Offer[]>([]);

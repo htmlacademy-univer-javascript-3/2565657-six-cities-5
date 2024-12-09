@@ -11,10 +11,12 @@ import {AuthorizationStatus} from './pages/favorites-page/authorization-status.t
 import LoadingSpinner from '../store/loading-spinner.tsx';
 import HistoryRouter from '../store/history-router.tsx';
 import browserHistory from '../store/browser-history.ts';
+import MainEmptyPage from './pages/main-empty-page/main-empty-page.tsx';
 
 function App() {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const offers = useAppSelector((state) => state.offers);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (<LoadingSpinner />);
@@ -23,7 +25,7 @@ function App() {
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path={AppRouter.Main} element={<MainPage />} />
+        <Route path={AppRouter.Main} element={offers.length ? <MainPage /> : <MainEmptyPage />} />
         <Route path={AppRouter.Login} element={<LoginPage />} />
         <Route path={AppRouter.Favorites} element={
           <PrivateRoute authorizationStatus={authorizationStatus}>

@@ -4,7 +4,7 @@ type ReviewCardProps = {
   review: Comment;
 }
 
-function ReviewCard({ review } : ReviewCardProps) {
+function CommentCard({ review } : ReviewCardProps) {
   const [year, month, day] = review.date.split('-');
   const formattedDate = `${day}.${month}.${year}`;
 
@@ -37,4 +37,4 @@ function ReviewCard({ review } : ReviewCardProps) {
   );
 }
 
-export default ReviewCard;
+export default CommentCard;
