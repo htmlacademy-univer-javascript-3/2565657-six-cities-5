@@ -1,14 +1,14 @@
-import {Review} from '../../../../interfaces/review.ts';
+import {Comment} from '../../../../interfaces/comment.ts';
 import ReviewCard from './review-card.tsx';
 
 type ReviewsListProps = {
-  reviews: Review[];
+  comments: Comment[];
 }
 
-function ReviewsList({ reviews } : ReviewsListProps) {
+function ReviewsList({ comments } : ReviewsListProps) {
   return (
     <ul className="reviews__list">
-      {reviews.map((review) => (<ReviewCard key={review.id} review={review}/>))}
+      {comments.map((review) => (<ReviewCard key={review.id} review={review}/>))}
     </ul>
   );
 }

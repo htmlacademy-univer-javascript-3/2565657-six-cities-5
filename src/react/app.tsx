@@ -1,37 +1,40 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import {AppRouter} from './routing/app-router.ts';
+import {Route, Routes} from 'react-router-dom';
+import {AppRouter} from './app-router.ts';
 import LoginPage from './pages/login-page/login-page.tsx';
 import MainPage from './pages/main-page/main-page.tsx';
 import FavoritesPage from './pages/favorites-page/favorites-page.tsx';
 import OfferPage from './pages/offer-page/offer-page.tsx';
 import NotFoundPage from './pages/not-found-page/not-found-page.tsx';
-import {DetailedOffer} from '../interfaces/detailed-offer.ts';
-import {Review} from '../interfaces/review.ts';
 import PrivateRoute from './pages/favorites-page/private-route.tsx';
-import {City} from '../interfaces/city.ts';
+import {useAppSelector} from '../store';
+import {AuthorizationStatus} from './pages/favorites-page/authorization-status.ts';
+import LoadingSpinner from '../store/loading-spinner.tsx';
+import HistoryRouter from '../store/history-router.tsx';
+import browserHistory from '../store/browser-history.ts';
 
-type AppProps = {
-  detailedOffers: DetailedOffer[];
-  comments: Review[];
-  cities: City[];
-}
+function App() {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-function App({ detailedOffers, comments, cities } : AppProps) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (<LoadingSpinner />);
+  }
+
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path={AppRouter.Main} element={<MainPage offers={detailedOffers} cities={cities} />} />
+        <Route path={AppRouter.Main} element={<MainPage />} />
         <Route path={AppRouter.Login} element={<LoginPage />} />
         <Route path={AppRouter.Favorites} element={
-          <PrivateRoute>
-            <FavoritesPage favoriteOffers={detailedOffers.filter((detailedOffer) => detailedOffer.isFavorite)} />
+          <PrivateRoute authorizationStatus={authorizationStatus}>
+            <FavoritesPage />
           </PrivateRoute>
         }
         />
-        <Route path={AppRouter.Offer} element={<OfferPage detailedOffers={detailedOffers} reviews={comments}/>}/>
+        <Route path={AppRouter.Offer} element={<OfferPage />}/>
         <Route path={AppRouter.NotFoundPage} element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

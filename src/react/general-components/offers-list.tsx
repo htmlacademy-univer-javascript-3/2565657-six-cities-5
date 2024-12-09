@@ -1,19 +1,17 @@
 import {Offer} from '../../interfaces/offer.ts';
 import OfferCard from './offer-card.tsx';
 import {Link} from 'react-router-dom';
-import {Point} from '../../interfaces/point.ts';
 
 type OffersListProps = {
   isNearbyOffersList: boolean;
   offers: Offer[];
-  setSelectedPoint: React.Dispatch<React.SetStateAction<Point | null>>;
+  setSelectedPoint: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 function OffersList({ isNearbyOffersList, offers, setSelectedPoint } : OffersListProps) {
 
   const handleMouseOver = (id: string) => {
-    const point = offers.find((offer) => offer.id === id)!.point;
-    setSelectedPoint(point);
+    setSelectedPoint(id);
   };
 
   const handleMouseOut = () => {
@@ -25,9 +23,9 @@ function OffersList({ isNearbyOffersList, offers, setSelectedPoint } : OffersLis
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
         <div className="near-places__list places__list">
-          {offers.length === 0
+          {!offers.length
             ? <p>There are no nearby places</p>
-            : offers.map((nearbyOffer) => (
+            : offers.slice(0, 3).map((nearbyOffer) => (
               <Link onClick={() => window.scrollTo(0, 0)} key={nearbyOffer.id} to={`/offer/${nearbyOffer.id}`}>
                 <OfferCard
                   key={nearbyOffer.id}
