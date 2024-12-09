@@ -16,6 +16,7 @@ import LoadingSpinner from '../../../store/loading-spinner.tsx';
 import {getToken} from '../../../api/token.ts';
 import {AuthorizationStatus} from '../favorites-page/authorization-status.ts';
 import {logoutAction} from '../../../store/api-actions.ts';
+import NotFoundPage from '../not-found-page/not-found-page.tsx';
 
 function OfferPage() {
   const { id } = useParams();
@@ -23,6 +24,7 @@ function OfferPage() {
   const [nearbyOffers, setNearbyOffers] = useState<Offer[]>([]);
 
   const [selectedDetailedOffer, setSelectedDetailedOffer] = useState<DetailedOffer | null>(null);
+  const [isNotFound, setIsNotFound] = useState<boolean>(false);
 
   const [comments, setComments] = useState<Comment[]>([]);
 
@@ -41,11 +43,17 @@ function OfferPage() {
         'x-token': `${token}`,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 404) {
+          setIsNotFound(true);
+        }
+
+        return response.json();
+      })
       .then((data: DetailedOffer) => setSelectedDetailedOffer(data))
-      .catch((err: string) =>
-        dispatch(setError(err))
-      );
+      .catch((err: string) => {
+        dispatch(setError(err));
+      });
   }, [id]);
 
   useEffect(() => {
@@ -80,7 +88,9 @@ function OfferPage() {
       );
   }, [id]);
 
-  if (!selectedDetailedOffer) {
+  if (isNotFound) {
+    return <NotFoundPage />;
+  } else if (!selectedDetailedOffer) {
     return <LoadingSpinner />;
   }
 
@@ -231,7 +241,7 @@ function OfferPage() {
                   </span>
                 </h2>
                 <ReviewsList comments={comments} />
-                <CommentForm />
+                {authorizationStatus === AuthorizationStatus.Auth && <CommentForm />}
               </section>
             </div>
           </div>
