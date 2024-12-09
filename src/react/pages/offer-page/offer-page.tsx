@@ -7,13 +7,15 @@ import {useEffect, useState} from 'react';
 import {Point} from '../../../interfaces/point.ts';
 import OffersList from '../../general-components/offers-list.tsx';
 import {Offer} from '../../../interfaces/offer.ts';
-import {useAppDispatch} from '../../../store';
+import {useAppDispatch, useAppSelector} from '../../../store';
 import {ApiRouter} from '../../../api/api-router.ts';
 import {setError} from '../../../store/actions.ts';
 import {DetailedOffer} from '../../../interfaces/detailed-offer.ts';
 import {Comment} from '../../../interfaces/comment.ts';
 import LoadingSpinner from '../../../store/loading-spinner.tsx';
 import {getToken} from '../../../api/token.ts';
+import {AuthorizationStatus} from '../favorites-page/authorization-status.ts';
+import {logoutAction} from '../../../store/api-actions.ts';
 
 function OfferPage() {
   const { id } = useParams();
@@ -27,6 +29,7 @@ function OfferPage() {
   const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
 
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const token = getToken();
 
   useEffect(() => {
@@ -35,7 +38,7 @@ function OfferPage() {
     fetch(path, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'x-token': `${token}`,
       },
     })
       .then((response) => response.json())
@@ -51,7 +54,7 @@ function OfferPage() {
     fetch(path, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'x-token': `${token}`,
       },
     })
       .then((response) => response.json())
@@ -67,7 +70,7 @@ function OfferPage() {
     fetch(path, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'x-token': `${token}`,
       },
     })
       .then((response) => response.json())
@@ -104,17 +107,28 @@ function OfferPage() {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
+                  {authorizationStatus === AuthorizationStatus.Auth &&
+                    <Link className="header__nav-link header__nav-link--profile" to={AppRouter.Favorites}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                      <span className="header__favorite-count">3</span>
+                    </Link>}
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
+                  {authorizationStatus !== AuthorizationStatus.Auth
+                    ?
+                    <Link className="header__nav-link" to={AppRouter.Login}>
+                      <span className="header__signout">Sign in</span>
+                    </Link>
+                    :
+                    <Link
+                      onClick={() => dispatch(logoutAction())}
+                      className="header__nav-link"
+                      to={`/offer/${id}`}
+                    >
+                      <span className="header__signout">Sign out</span>
+                    </Link>}
                 </li>
               </ul>
             </nav>
