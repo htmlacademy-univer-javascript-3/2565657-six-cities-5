@@ -1,4 +1,9 @@
 import {useState} from 'react';
+import {useAppDispatch} from "../../../store";
+import {getToken} from "../../../api/token.ts";
+import {ApiRouter} from "../../../api/api-router.ts";
+import {setError} from "../../../store/actions.ts";
+import {json} from "react-router-dom";
 
 interface CommentData {
   rating: string;
@@ -12,6 +17,8 @@ function CommentForm() {
     rating: '',
     comment: ''
   });
+  const dispatch = useAppDispatch();
+  const token = getToken();
 
   const handleFormChange = (e: ChangeEvent) => {
     const name = e.target.name;
@@ -22,8 +29,24 @@ function CommentForm() {
     });
   };
 
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const path = `${ApiRouter.BasePath}${ApiRouter.Comment}${2}`;
+    const box = {comment: formData.comment, rating: formData.rating};
+    fetch(path, {
+      method: 'POST',
+      headers: {
+        'x-token': `${token}`,
+      },
+    })
+      .then((response) => response)
+      .catch((err: string) =>
+        dispatch(setError(err))
+      );
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form onSubmit={handleFormSubmit} className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="comment">Your comment</label>
       <div className="reviews__rating-form form__rating">
         <input className="form__rating-input visually-hidden" onChange={handleFormChange} name="rating" value="5" id="5-stars" type="radio" />
