@@ -1,7 +1,7 @@
 import {Link, useParams} from 'react-router-dom';
 import {AppRouter} from '../../app-router.ts';
 import CommentForm from './comment-form.tsx';
-import ReviewsList from './reviews-list/reviews-list.tsx';
+import CommentsList from './reviews-list/comments-list.tsx';
 import Map from '../../general-components/map.tsx';
 import {useEffect, useState} from 'react';
 import {Point} from '../../../interfaces/point.ts';
@@ -89,6 +89,7 @@ function OfferPage() {
   }, [id]);
 
   if (isNotFound) {
+    setIsNotFound(false);
     return <NotFoundPage />;
   } else if (!selectedDetailedOffer) {
     return <LoadingSpinner />;
@@ -240,7 +241,7 @@ function OfferPage() {
                     {comments.length}
                   </span>
                 </h2>
-                <ReviewsList comments={comments} />
+                <CommentsList comments={comments} />
                 {authorizationStatus === AuthorizationStatus.Auth && <CommentForm />}
               </section>
             </div>

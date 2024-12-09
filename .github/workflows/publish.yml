@@ -36,7 +36,7 @@ jobs:
           target-folder: ${{ env.PR }}
           commit-message: "✔️ Сборка #${{ env.PR }}"
 
-      - name: ReviewCard PR
+      - name: CommentCard PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
