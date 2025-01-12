@@ -1,8 +1,7 @@
-import {Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AppRouter} from '../../components/app-router/app-router.ts';
 import {useAppDispatch, useAppSelector} from '../../components/store';
 import {AuthorizationStatus} from '../../components/enums/authorization-status.ts';
-import browserHistory from '../../components/store/browser-history.ts';
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner.tsx';
 import LoginPage from './login-page/login-page.tsx';
 import MainPage from './main-page/main-page.tsx';
@@ -11,7 +10,6 @@ import PrivateRoute from '../../hocs/private-route.tsx';
 import FavoritesPage from './favorites-page/favorites-page.tsx';
 import OfferPage from './offer-page/offer-page.tsx';
 import NotFoundPage from './not-found-page/not-found-page.tsx';
-import HistoryRouter from '../../hocs/history-router.tsx';
 import {checkAuthAction, fetchFavoritesAction, fetchOffersAction} from '../../components/store/actions/api-actions.ts';
 import {useEffect, useState} from 'react';
 
@@ -32,7 +30,7 @@ function App() {
   return (authorizationStatus === AuthorizationStatus.Unknown || isDataReceived !== 6)
     ? (<LoadingSpinner />)
     : (
-      <HistoryRouter history={browserHistory}>
+      <BrowserRouter>
         <Routes>
           <Route path={AppRouter.Main} element={offers.length ? <MainPage /> : <MainEmptyPage />} />
           <Route path={AppRouter.Login} element={authorizationStatus === AuthorizationStatus.Auth ? <MainPage /> : <LoginPage />} />
@@ -45,7 +43,7 @@ function App() {
           <Route path={AppRouter.Offer} element={<OfferPage />}/>
           <Route path={AppRouter.NotFoundPage} element={<NotFoundPage />} />
         </Routes>
-      </HistoryRouter>
+      </BrowserRouter>
     );
 }
 
