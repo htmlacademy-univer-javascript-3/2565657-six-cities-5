@@ -2,7 +2,6 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, State} from './state.ts';
 import {createAPI} from '../api/api.ts';
-import {redirect} from './redirect.ts';
 import {userReducer} from './reducers/user-reducer.ts';
 import {mainPageDataReducer} from './reducers/main-page-data-reducer.ts';
 import {favoritePageDataReducer} from './reducers/favorites-page-data-reducer.ts';
@@ -25,7 +24,7 @@ export const store = configureStore({
       thunk: {
         extraArgument: api,
       },
-    }).concat(redirect),
+    }),
 });
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
